@@ -23,7 +23,7 @@ module SendgridNotification
       assert { ExampleMail.new.key == 'registration' }
     end
 
-    test 'validates content can recieve parameters and no unresolved variables remains' do
+    test 'validates that content can receive parameters and that no unresolved variables remain' do
       @m = ExampleMail.first
       assert { @m.valid? }
 
@@ -35,9 +35,11 @@ module SendgridNotification
 
       @m.content = '[{{ name }}]{{ email }} {{ tel }}'
       assert { @m.invalid? }
+      assert_equal 'has unresolved variables: tel', @m.errors[:content].first
 
       @m.content = '[{{ name0 }}]{{ email }}'
       assert { @m.invalid? }
+      assert_equal 'has unresolved variables: name0', @m.errors[:content].first
 
       # base class has no validations about content
       base = @m.becomes(NotificationMail)
