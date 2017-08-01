@@ -30,7 +30,7 @@ module SendgridNotification
         params[key] || params[key.to_sym] || unresolved.push(key)
       }
       if unresolved.present?
-        errors.add(:content, :unresolved, message: "have unresolved variables: #{unresolved.join(",")}")
+        errors.add(:content, :unresolved_template_parameters, variables: unresolved.join(","))
       end
       body
     end

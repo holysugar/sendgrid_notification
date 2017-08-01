@@ -1,0 +1,9 @@
+---
+en:
+  activerecord:
+    errors:
+      models:
+        sendgrid_notification/notification_mail_subclass_test/example_mail:
+          attributes:
+            content:
+              unresolved_template_parameters: "has unresolved variables: %{variables}"
