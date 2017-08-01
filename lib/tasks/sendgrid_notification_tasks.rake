@@ -7,7 +7,7 @@ namespace :sendgrid_notification do
         m.subject = 'Test mail subject'
         m.content = <<-EOD
 This is test mail.
-<%= body  %>
+{{ body }}
         EOD
       end
     end
