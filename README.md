@@ -1,6 +1,6 @@
 # SendgridNotification
 
-SendgridNotification is mountable engine of Ruby on Rails, and
+SendgridNotification is engine of Ruby on Rails, and
 notification mail (e.g. account registration, logging in by new devise,
 reminder, etc...) sender and utility, using SendGrid API.
 
