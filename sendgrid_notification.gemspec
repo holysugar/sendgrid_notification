@@ -9,14 +9,14 @@ Gem::Specification.new do |s|
   s.version     = SendgridNotification::VERSION
   s.authors     = ["HORII Keima"]
   s.email       = ["holysugar@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/holysugar/sendgrid_notification"
   s.summary     = "notification mail sender via sendgrid API"
   s.description = "notification mail sender via sendgrid API"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", "~> 5.1.2"
+  s.add_dependency "rails", ">= 5.1"
   s.add_dependency "sendgrid-ruby"
 
   s.add_development_dependency "sqlite3"
