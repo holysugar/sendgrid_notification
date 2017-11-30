@@ -1,15 +1,7 @@
-require 'sendgrid-ruby'
-
 module SendgridNotification
-  class SendgridMailer
+  class SendgridMailer < BaseMailer
     prepend MailRecordable
-
     class Error < StandardError; end
-
-    def initialize
-      @from = Rails.application.config.sendgrid_notification.mail_from
-      @from_name = Rails.application.config.sendgrid_notification.mail_from_name
-    end
 
     def sendmail(to, notification_mail, params = {})
       body = notification_mail.apply(params)
@@ -34,8 +26,8 @@ module SendgridNotification
 
     def _sendmail(to, notification_mail, body)
       sendgrid_client.mail_send(
-        from: @from,
-        from_name: @from_name,
+        from: from,
+        from_name: from_name,
         to: to,
         subject: notification_mail.subject,
         body: body
