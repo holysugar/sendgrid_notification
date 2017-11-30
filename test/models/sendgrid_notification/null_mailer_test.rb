@@ -1,7 +1,10 @@
 module SendgridNotification
   class NullMailerTest < ActiveSupport::TestCase
     setup do
-      @mailer = NullMailer.new
+      @mailer = NullMailer.new(
+        mail_from: "admin@example.com",
+        mail_from_name: "Taro Yamada"
+      )
       @mail = create(:notification_mail,
         key: 'sendgrid_mailer_test',
         subject: 'Sendgrid mailer テスト',
@@ -9,7 +12,9 @@ module SendgridNotification
     end
 
     test 'can send mail (but fake) and store result' do
-      @mailer.sendmail('sample@exmaple.com', @mail, emoji: "\u{1F363}")
+      @mailer.sendmail('sample@example.com', @mail, emoji: "\u{1F363}")
+      assert { @mailer.from == "admin@example.com" }
+      assert { @mailer.from_name == "Taro Yamada" }
       assert { @mailer.last_result_success? }
       assert { @mailer.last_result.subject == 'Sendgrid mailer テスト' }
       assert { @mailer.last_result.body == '🍣' }
@@ -18,9 +23,9 @@ module SendgridNotification
 
     test '#sendmail stores mail history' do
       prev_count = MailHistory.count
-      @mailer.sendmail('sample@exmaple.com', @mail, emoji: "\u{1F363}")
+      @mailer.sendmail('sample@example.com', @mail, emoji: "\u{1F363}")
       assert { MailHistory.count    == prev_count + 1 }
-      assert { MailHistory.last.to  == 'sample@exmaple.com' }
+      assert { MailHistory.last.to  == 'sample@example.com' }
       assert { MailHistory.last.key == 'sendgrid_mailer_test' }
       assert { MailHistory.last.sent_at.is_a? Time }
     end
