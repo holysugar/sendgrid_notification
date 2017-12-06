@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :notification_mail, class: 'SendgridNotification::NotificationMail' do
     sequence(:key) { |n| "key#{n}" }
     subject "Mail Subject"

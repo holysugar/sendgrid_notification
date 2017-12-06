@@ -23,7 +23,7 @@ require "minitest/rg"
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 class ActiveSupport::TestCase
-  include FactoryGirl::Syntax::Methods
+  include FactoryBot::Syntax::Methods
 end
