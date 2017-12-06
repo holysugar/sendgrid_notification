@@ -28,7 +28,7 @@ module SendgridNotification
       end
 
       def body
-        raw.try(:body) ? JSON.parse(raw.body) : ''
+        JSON.parse(raw.body) rescue {}
       end
 
       delegate :headers, to: :raw
