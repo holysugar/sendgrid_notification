@@ -42,7 +42,8 @@ This is test mail.
 
     desc 'update status after previous autoupdate'
     task autoupdate: :environment do
-      SendgridNotification::SendgridStatus.auto_update
+      ignore_errors = !!ENV["IGNORE_ERRORS"]
+      SendgridNotification::SendgridStatus.auto_update(ignore_errors: ignore_errors)
     end
 
     desc 'only retrieve suppression statuses (start=datetime end=datetime)'

@@ -17,19 +17,33 @@ module SendgridNotification
       end
     end
 
-    def self.auto_update
-      last = SendgridStatusUpdateHistory.last
-      start_time = last ? last.end_time : 1.hour.ago.to_i
+    def self.auto_update(ignore_errors: false)
+      last_end_time = SendgridNotification::SendgridStatusUpdateHistory.order(:id).reverse_order.limit(1).pluck(:end_time).first
+      start_time = last_end_time || 1.hour.ago.to_i
       end_time = Time.now.to_i
 
       suppressions = update(start_time, end_time)
 
-      SendgridStatusUpdateHistory.create!(
-        start_time: start_time,
-        end_time: end_time,
-        count: suppressions.size,
-        body: suppressions.map(&:to_s).join("\n")
-      )
+      begin
+        SendgridStatusUpdateHistory.create!(
+          start_time: start_time,
+          end_time: end_time,
+          count: suppressions.size,
+          body: suppressions.map(&:to_s).join("\n")
+        )
+      rescue => e
+        if ignore_errors
+          warn "#{e} (ignored)"
+          SendgridStatusUpdateHistory.create(
+            start_time: start_time,
+            end_time: end_time,
+            count: suppressions.size,
+            body: "" # ignored
+          )
+        else
+          raise
+        end
+      end
     end
 
     # TODO: 前回の保存日時からの内容を記録
