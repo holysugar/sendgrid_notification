@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170217072256) do
+ActiveRecord::Schema.define(version: 20191120070545) do
 
   create_table "mail_histories", force: :cascade do |t|
     t.string "key", null: false
@@ -20,12 +20,13 @@ ActiveRecord::Schema.define(version: 20170217072256) do
     t.text "error_reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["to"], name: "index_mail_histories_on_to"
   end
 
   create_table "notification_mails", force: :cascade do |t|
     t.string "key", null: false
     t.string "subject", null: false
-    t.text "content", null: false
+    t.text "content", limit: 16777215, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_notification_mails_on_key", unique: true
@@ -35,7 +36,7 @@ ActiveRecord::Schema.define(version: 20170217072256) do
     t.integer "start_time", null: false
     t.integer "end_time", null: false
     t.integer "count"
-    t.text "body"
+    t.text "body", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
