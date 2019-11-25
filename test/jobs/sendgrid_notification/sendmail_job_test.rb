@@ -11,7 +11,7 @@ module SendgridNotification
 
     test 'perform gets sendmail' do
       # this test uses NullMailer. see test/dummy/config/environments/test.rb
-      SendmailJob.perform_now('sink@example.com', @notification_mail, name: 'テスト')
+      SendmailJob.perform_now('sink@example.com', @notification_mail, {name: 'テスト'})
 
       assert { NullMailer.results.last }
       last_result = NullMailer.results.last

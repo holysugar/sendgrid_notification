@@ -50,8 +50,12 @@ module SendgridNotification
 
     # TODO: status_code が 500 系およびタイムアウトのときにリトライできるようにする
     # POST /mail/send
-    def mail_send(from:, from_name:, to:, subject:, body:)
+    def mail_send(from:, from_name:, to:, subject:, body:, attachments: [])
       mail = build_mail(from, from_name, to, subject, body)
+      attachments.each do |a|
+        a = SendgridNotification::Attachment.new(a) if a.is_a?(Hash)
+        mail.add_attachment(a.as_sendgrid)
+      end
       res = client.mail._('send').post(request_body: mail.to_json)
       @last_response = Response.new(res)
     end

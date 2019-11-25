@@ -90,7 +90,7 @@ module SendgridNotification
     test 'auto_update updates mail history' do
       skip_unless_sendgrid_api_key
 
-      # 前回の end_at が今回の started
+      # started is same as previous end_at
       started = @mail_sent_at - 1200
 
       create(:sendgrid_status_update_history,

@@ -15,18 +15,20 @@ module SendgridNotification
 
     test 'can sendmail_later' do
       to = 'sink@example.com'
-      params = { name: 'テスト', dummy: '使いません' }
+      attachments = []
+      params = { name: 'TEST', dummy: "DUMMY PARAMS" }
 
-      assert_enqueued_with(job: SendmailJob, args: [to, @o, params]) do
-        @o.sendmail_later(to, params)
+      assert_enqueued_with(job: SendmailJob, args: [to, @o, params, attachments]) do
+        @o.sendmail_later(to, params, attachments)
       end
     end
 
     test 'can sendmail_now' do
       to = 'sink@example.com'
-      params = { name: 'テスト', dummy: '使いません' }
+      attachments = []
+      params = { name: 'TEST', dummy: 'DUMMY PARAMS' }
 
-      @o.sendmail_now(to, params)
+      @o.sendmail_now(to, params, attachments)
       assert_no_enqueued_jobs
     end
 
@@ -35,11 +37,9 @@ module SendgridNotification
       assert { intance.method(:sendmail) == intance.method(:sendmail_later) }
     end
 
-
     test '#apply returns apply params to content' do
       assert { @o.apply(name: 'foo') == '[foo]' }
     end
-
 
     # backward compatibility...
     test 'can change variables pattern' do
@@ -51,8 +51,5 @@ module SendgridNotification
         NotificationMail.variable_regexp = NotificationMail::VARIABLE_REGEXP_DEFAULT
       end
     end
-
-
   end
-
 end

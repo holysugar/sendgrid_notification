@@ -8,7 +8,12 @@ module SendgridNotification
       @from_name = _params.fetch(:mail_from_name) { Rails.application.config.sendgrid_notification.mail_from_name }
     end
 
-    def sendmail(to, notification_mail, params = {})
+    # Send mail about:
+    # +to+ recipent to
+    # +notification_mail+ NotificationMail object for mail expression
+    # +params+ params for notification_mail
+    # +attachments+ attachment in hash or SendgridNotification::Attachment
+    def sendmail(to, notification_mail, params, attachments = [])
       raise NotImplementedError, "you should implement #{self.class}##{__method__}"
     end
 
