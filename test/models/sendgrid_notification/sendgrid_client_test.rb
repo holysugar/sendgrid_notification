@@ -62,7 +62,7 @@ module SendgridNotification
         assert { res.body.first['created'] > started.to_i }
         assert { res.body.first['email'].is_a? String }
         assert { res.body.first['reason'].is_a? String }
-        assert { res.body.first['status'] =~ /\A\d+\.\d+\.\d+\z/ }
+        assert { res.body.first['status'].yield_self{|s| s == "" || s =~ /\A\d+\.\d+\.\d+\z/ } }
       end
     end
 
