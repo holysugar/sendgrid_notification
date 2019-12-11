@@ -3,9 +3,9 @@ module SendgridNotification
     prepend MailRecordable
     class Error < StandardError; end
 
-    def sendmail(to, notification_mail, params = {})
+    def sendmail(to, notification_mail, params, attachments = [])
       body = notification_mail.apply(params)
-      _sendmail(to, notification_mail, body)
+      _sendmail(to, notification_mail, body, attachments: attachments)
     end
 
     def last_result
@@ -24,13 +24,14 @@ module SendgridNotification
       @sendgrid_client ||= SendgridClient.new
     end
 
-    def _sendmail(to, notification_mail, body)
+    def _sendmail(to, notification_mail, body, attachments: )
       sendgrid_client.mail_send(
         from: from,
         from_name: from_name,
         to: to,
         subject: notification_mail.subject,
-        body: body
+        body: body,
+        attachments: attachments,
       )
     end
   end

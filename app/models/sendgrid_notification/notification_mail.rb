@@ -12,15 +12,16 @@ module SendgridNotification
     VARIABLE_REGEXP_DEFAULT = /\{\{\s*(\w+)\s*\}\}/
     self.variable_regexp = VARIABLE_REGEXP_DEFAULT
 
-
-    def sendmail_later(to, params = {})
-      SendmailJob.perform_later(to, self, params)
+    def sendmail_later(to, params, attachments = [])
+      hash_attachments = attachments.map(&:to_h)
+      SendmailJob.perform_later(to, self, params, hash_attachments)
     end
 
     alias_method :sendmail, :sendmail_later
 
-    def sendmail_now(to, params = {})
-      SendmailJob.perform_now(to, self, params)
+    def sendmail_now(to, params, attachments = [])
+      hash_attachments = attachments.map(&:to_h)
+      SendmailJob.perform_now(to, self, params, hash_attachments)
     end
 
     def apply(params)
