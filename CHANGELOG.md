@@ -1,8 +1,8 @@
 # Change Log
 
-## [Unreleased]
+## [0.2.0]
 
-### Changed
+### New Features
 
 - (Breaking changes) Enable to attachment files
   - Require Rails version >= `5.2`
@@ -11,6 +11,8 @@
     - `params`: remove default value. can't use as kwargs
     - `attachments`: attachments
   - Change  `SendmailJob#perform` args
+
+### Changes
 
 - (Migration required) About Generating Database Schema
   - sendgrid_status_update_histories.body limit to mysql LONGTEXT
