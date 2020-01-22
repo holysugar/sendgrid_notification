@@ -2,7 +2,7 @@ module SendgridNotification
   class NotificationMail < ActiveRecord::Base
 
     with_options presence: true do
-      validates :key, uniqueness: true
+      validates :key, uniqueness: { case_sensitive: false }
       validates :subject
       validates :content
     end

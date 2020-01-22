@@ -1,5 +1,13 @@
 # Change Log
 
+## [0.2.1]
+
+### Changes
+
+- (Breaking changes) Change uniqueness validator case_sensitive option
+  - `case_sensitive: false`
+  - required for `rails >= 6`
+
 ## [0.2.0]
 
 ### New Features
